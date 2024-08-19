@@ -18,21 +18,21 @@ A web-based calculator tool designed to assist organizations in calculating wast
 ## Installation
 
 1. **Clone the repository**:
-   \`\`\`bash
+   ```bash
    git clone https://github.com/toddbrannon/SB1383_Calculator.git
    cd SB1383_Calculator
-   \`\`\`
+   ```
 
 2. **Install Dependencies**:
    Make sure you have Node.js installed. Then run:
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
+   ```
 
 3. **Start the Application**:
-   \`\`\`bash
+   ```bash
    npm start
-   \`\`\`
+   ```
    The application should now be running locally at \`http://localhost:3000\`.
 
 ## Usage
