@@ -1,4 +1,4 @@
-require('dotenv').config();  // Load environment variables
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
@@ -33,8 +33,6 @@ function generatePDF(data) {
     doc.text('2025 Procurement Requirements:', 10, 50);
     doc.text(`${requirement2025} tons`, 10, 60);
 
-    // Add more content as needed
-    
     return doc;
 }
 
