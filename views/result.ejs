@@ -1,0 +1,273 @@
+<%- include('partials/header'); %>
+
+<div class="button-row">
+    <a href="/" class="btn btn-secondary">Back</a>
+    <button id="savePdfBtn" class="btn btn-success">Save as PDF</button>
+    <a href="/find-out-more" class="btn btn-primary">Find Out More</a>
+</div>
+
+<h1>Procurement Requirements for <%= city %></h1>
+<p>Population: <%= population.toLocaleString() %></p>
+
+<h3>Procurement Requirements</h3>
+
+<div id="resultsContent">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="column-1">Requirement</th>
+                <th class="column-2">2024</th>
+                <th class="column-3">2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    SB 1383 ROWP Procurement Requirement
+                    <br>
+                    <small class="text-muted ms-3 fst-italic">Note: SB1383 requires .08 tons per person</small>
+                </td>
+                <td><%= requirement2024.toLocaleString() %> tons</td>
+                <td><%= requirement2025.toLocaleString() %> tons</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Total purchases by option to meet SB 1383 procurement requirements</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th class="column-1">Option</th>
+                <th class="column-2">2024</th>
+                <th class="column-3">2025</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Electricity Needed for one PCA</td>
+                <td><%= results2024.electricityPCA.toLocaleString() %> kWh</td>
+                <td><%= results2025.electricityPCA.toLocaleString() %> kWh</td>
+            </tr>
+            <tr>
+                <td>Renewable Gas in the form of Transportation Fuel</td>
+                <td><%= results2024.renewableGasFuel.toLocaleString() %> DGE</td>
+                <td><%= results2025.renewableGasFuel.toLocaleString() %> DGE</td>
+            </tr>
+            <tr>
+                <td>Electricity from Renewable Gas</td>
+                <td><%= results2024.electricityRenewableGas.toLocaleString() %> kWh</td>
+                <td><%= results2025.electricityRenewableGas.toLocaleString() %> kWh</td>
+            </tr>
+            <tr>
+                <td>Heat from Renewable Gas</td>
+                <td><%= results2024.heatRenewableGas.toLocaleString() %> therms</td>
+                <td><%= results2025.heatRenewableGas.toLocaleString() %> therms</td>
+            </tr>
+            <tr>
+                <td>Compost (Tons)</td>
+                <td><%= results2024.compostTons.toLocaleString() %> tons</td>
+                <td><%= results2025.compostTons.toLocaleString() %> tons</td>
+            </tr>
+            <tr>
+                <td>Compost (Cubic Yards)</td>
+                <td><%= results2024.compostCubicYards.toLocaleString() %> cubic yards</td>
+                <td><%= results2025.compostCubicYards.toLocaleString() %> cubic yards</td>
+            </tr>
+            <tr>
+                <td>Mulch</td>
+                <td><%= results2024.mulch.toLocaleString() %> tons</td>
+                <td><%= results2025.mulch.toLocaleString() %> tons</td>
+            </tr>
+            <tr>
+                <td>
+                    <small class="text-muted ms-3 fst-italic">Note: Based on standard factors from SB 1383. Cities can use a mix of products to comply</small>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Visualization -->
+     <!-- Charts Row -->
+    <div class="row">
+        <!-- Chart for 2024 -->
+        <div class="col-lg-6 col-12 chart-container mt-5">
+            <h4 class="text-center">2024 Procurement Requirements</h4>
+            <canvas id="chart2024"></canvas>
+        </div>
+        <!-- Chart for 2025 -->
+        <div class="col-lg-6 col-12 chart-container mt-5">
+            <h4 class="text-center">2025 Procurement Requirements</h4>
+            <canvas id="chart2025"></canvas>
+        </div>
+    </div>
+
+</div>
+
+    <script>
+    document.getElementById('savePdfBtn').addEventListener('click', function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Define the width and height of the logo
+    const logoWidth = 20;  // Width of the logo in mm
+    const logoHeight = 10;  // Adjust the height proportionally
+
+    // Calculate the X position to center the logo
+    const pageWidth = doc.internal.pageSize.getWidth();  // Get the width of the page
+    const logoX = (pageWidth - logoWidth) / 2;  // Center the logo horizontally
+
+    // Add Valinor Energy logo and title
+    const logo = new Image();
+    logo.src = '/img/logo.png';
+    logo.onload = function() {
+        doc.addImage(logo, 'PNG', logoX, 10, logoWidth, logoHeight);  // Add centered logo
+        doc.setFontSize(16);
+        doc.text('Valinor Energy', pageWidth / 2, 30, null, null, 'center');  // Center the text
+
+        // Add title and introductory text
+        doc.setFontSize(14);
+        doc.text(`Procurement Requirements for <%= city %>`, 10, 50);
+        doc.setFontSize(12);
+        doc.text(`Population: <%= population.toLocaleString() %>`, 10, 60);
+
+        // Add Procurement Requirements title and table
+        doc.setFontSize(14);
+        doc.text('Procurement Requirements', 10, 70);
+        doc.autoTable({
+            startY: 75,
+            head: [['Requirement', '2024', '2025']],
+            body: [
+                ['SB 1383 ROWP Procurement Requirement', '<%= requirement2024.toLocaleString() %> tons', '<%= requirement2025.toLocaleString() %> tons'],
+            ],
+            theme: 'striped',
+            styles: { cellPadding: 3, halign: 'center' },
+            columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' } }
+        });
+
+        // Add Total Purchases title and table
+        doc.text('Total purchases by option to meet SB 1383 procurement requirements', 10, doc.lastAutoTable.finalY + 10);
+        doc.autoTable({
+            startY: doc.lastAutoTable.finalY + 15, // Spacing after the first table
+            head: [['Option', '2024', '2025']],
+            body: [
+                ['Electricity Needed for one PCA', '<%= results2024.electricityPCA.toLocaleString() %> kWh', '<%= results2025.electricityPCA.toLocaleString() %> kWh'],
+                ['Renewable Gas in the form of Transportation Fuel', '<%= results2024.renewableGasFuel.toLocaleString() %> DGE', '<%= results2025.renewableGasFuel.toLocaleString() %> DGE'],
+                ['Electricity from Renewable Gas', '<%= results2024.electricityRenewableGas.toLocaleString() %> kWh', '<%= results2025.electricityRenewableGas.toLocaleString() %> kWh'],
+                ['Heat from Renewable Gas', '<%= results2024.heatRenewableGas.toLocaleString() %> therms', '<%= results2025.heatRenewableGas.toLocaleString() %> therms'],
+                ['Compost (Tons)', '<%= results2024.compostTons.toLocaleString() %> tons', '<%= results2025.compostTons.toLocaleString() %> tons'],
+                ['Compost (Cubic Yards)', '<%= results2024.compostCubicYards.toLocaleString() %> cubic yards', '<%= results2025.compostCubicYards.toLocaleString() %> cubic yards'],
+                ['Mulch', '<%= results2024.mulch.toLocaleString() %> tons', '<%= results2025.mulch.toLocaleString() %> tons'],
+            ],
+            theme: 'striped',
+            styles: { cellPadding: 3, halign: 'center' },
+            columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' } }
+        });
+
+        // Save the document
+        doc.save('procurement_requirements.pdf');
+    };
+    logo.src = '/img/logo.png';  // Trigger the loading of the image
+});
+
+    </script>
+
+<!-- Chart Generation Script -->
+<script>
+    const ctx2024 = document.getElementById('chart2024').getContext('2d');
+    const chart2024 = new Chart(ctx2024, {
+        type: 'pie', // Set chart type to 'pie'
+        data: {
+            labels: ['Electricity PCA', 'Renewable Gas Fuel', 'Electricity Renewable Gas', 'Heat Renewable Gas', 'Compost (Tons)', 'Compost (Cubic Yards)', 'Mulch'],
+            datasets: [{
+                label: '2024 Procurement Requirements',
+                data: [
+                    <%= results2024.electricityPCA %>,
+                    <%= results2024.renewableGasFuel %>,
+                    <%= results2024.electricityRenewableGas %>,
+                    <%= results2024.heatRenewableGas %>,
+                    <%= results2024.compostTons %>,
+                    <%= results2024.compostCubicYards %>,
+                    <%= results2024.mulch %>
+                ],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(201, 203, 207, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+
+    const ctx2025 = document.getElementById('chart2025').getContext('2d');
+    const chart2025 = new Chart(ctx2025, {
+        type: 'pie', // Set chart type to 'pie'
+        data: {
+            labels: ['Electricity PCA', 'Renewable Gas Fuel', 'Electricity Renewable Gas', 'Heat Renewable Gas', 'Compost (Tons)', 'Compost (Cubic Yards)', 'Mulch'],
+            datasets: [{
+                label: '2025 Procurement Requirements',
+                data: [
+                    <%= results2025.electricityPCA %>,
+                    <%= results2025.renewableGasFuel %>,
+                    <%= results2025.electricityRenewableGas %>,
+                    <%= results2025.heatRenewableGas %>,
+                    <%= results2025.compostTons %>,
+                    <%= results2025.compostCubicYards %>,
+                    <%= results2025.mulch %>
+                ],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(201, 203, 207, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 205, 86, 1)',
+                    'rgba(201, 203, 207, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>
