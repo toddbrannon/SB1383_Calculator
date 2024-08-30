@@ -1,5 +1,12 @@
 <%- include('partials/header'); %>
 
+
+<div class="button-row">
+    <a href="/" class="btn btn-secondary">Back</a>
+    <button id="savePdfBtn" class="btn btn-success">Save as PDF</button>
+    <a href="/find-out-more" class="btn btn-primary">Find Out More</a>
+</div>
+
 <h1>Procurement Requirements for <%= city %></h1>
 <p>Population: <%= population.toLocaleString() %></p>
 
@@ -8,7 +15,7 @@
 <div id="resultsContent">
     <!-- Card for the first table -->
     <div class="card table-container">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th class="column-1">Requirement</th>
@@ -30,33 +37,26 @@
         </table>
     </div>
 
-    <!-- Button row between the tables -->
-    <div class="button-row text-center">
-        <a href="/" class="btn btn-secondary">Back</a>
-        <button id="savePdfBtn" class="btn btn-success">Save as PDF</button>
-        <a href="/find-out-more" class="btn btn-primary">Find Out More</a>
-    </div>
-
     <h3>Calculating Current Compliance % and Cost</h3>
 
     <!-- Card for the second table -->
     <div class="card table-container">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th class="column-1">Current Compliance Methods</th>
                     <th class="column-2">Volume</th>
                     <th class="column-3">Units</th>
-                    <th class="column-4">Current Cost (inclusive of procurement, transportation, distribution, administrative overhead)</th>
+                    <th class="column-3">Current Cost (inclusive of procurement, transportation, distribution, administrative overhead)</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Current Procurement of Compost</td>
-                    <td class="column-2">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" />
                     </td>             
-                    <td class="column-3">
+                    <td>
                         <select>
                             <option value="cubic_yards">cubic yards</option>
                             <option value="DGE">DGE</option>
@@ -65,16 +65,16 @@
                             <option value="tons">tons</option>
                         </select>
                     </td>
-                    <td class="column-4">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
                     </td>
                 </tr>
                 <tr>
                     <td>Current Procurement of Mulch</td>
-                    <td class="column-2">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" />
                     </td>           
-                    <td class="column-3">
+                    <td>
                         <select>
                             <option value="cubic_yards">cubic yards</option>
                             <option value="DGE">DGE</option>
@@ -83,16 +83,16 @@
                             <option value="tons">tons</option>
                         </select>
                     </td>
-                    <td class="column-4">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
                     </td>
                 </tr>
                 <tr>
                     <td>Current Procurement of RNG</td>
-                    <td class="column-2">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" />
                     </td>               
-                    <td class="column-3">
+                    <td>
                         <select>
                             <option value="cubic_yards">cubic yards</option>
                             <option value="DGE">DGE</option>
@@ -101,16 +101,16 @@
                             <option value="tons">tons</option>
                         </select>
                     </td>
-                    <td class="column-4">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
                     </td>
                 </tr>
                 <tr>
                     <td>Current Procurement of other (in ROWP tons)</td>
-                    <td class="column-2">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" />
                     </td>
-                    <td class="column-3">
+                    <td>
                         <select>
                             <option value="cubic_yards">cubic yards</option>
                             <option value="DGE">DGE</option>
@@ -119,18 +119,25 @@
                             <option value="tons">tons</option>
                         </select>
                     </td>
-                    <td class="column-4">
+                    <td>
                         <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
                     </td>
                 </tr>
                 <tr>
                     <td>Current Compliance</td>
-                    <td class="column-2"></td>
-                    <td class="column-3"></td>
-                    <td class="column-4"><%= results2025.compostTons.toLocaleString() %> tons</td>
+                    <td>
+                        
+                    </td>
+                    </td>
+                    <td>
+                        
+                    </td>
+                    
+                    <td><%= results2025.compostTons.toLocaleString() %> tons</td>
                 </tr>
+                
                 <tr>
-                    <td colspan="4">
+                    <td>
                         <small class="text-muted ms-3 fst-italic">Note: Based on standard factors from SB 1383. Cities can use a mix of products to comply</small>
                     </td>
                 </tr>
@@ -152,6 +159,7 @@
             <canvas id="chart2025"></canvas>
         </div>
     </div>
+
 </div>
 
 <script>
@@ -160,7 +168,7 @@
         const doc = new jsPDF();
 
         // Define the width and height of the logo
-        const logoWidth = 20;  // Width of the logo in 
+        const logoWidth = 20;  // Width of the logo in mm
         const logoHeight = 10;  // Adjust the height proportionally
 
         // Calculate the X position to center the logo
