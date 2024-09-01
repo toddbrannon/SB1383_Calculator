@@ -39,6 +39,25 @@
 
     <h3>Calculating Current Compliance % and Cost</h3>
 
+    <!-- Helper Function -->
+    <% function renderSelectAndInput() { %>
+        <td class="column-2">
+            <input type="number" step="0.01" min="0" placeholder="0.00" />
+        </td>             
+        <td class="column-3">
+            <select>
+                <option value="cubic_yards">cubic tons</option>
+                <option value="tons">tons</option>
+                <option value="DGE">DGE</option>
+                <option value="kWh">kWh</option>
+                <option value="therms">therms</option>
+            </select>
+        </td>
+        <td class="column-4">
+            <input type="number" step="0.01" min="0" placeholder="0.00" class="currencyInput" />
+        </td>
+    <% } %>
+
     <!-- Card for the second table -->
     <div class="card table-container">
         <table class="table table-bordered table-hover">
@@ -47,284 +66,122 @@
                     <th class="column-1">Current Compliance Methods</th>
                     <th class="column-2">Volume</th>
                     <th class="column-3">Units</th>
-                    <th class="column-4">Current Cost (inclusive of procurement, transportation, distribution, administrative overhead)</th>
+                    <th class="column-4">
+                        Current Cost 
+                        <small class="text-white fst-italic">(inclusive of procurement, transportation, distribution, administrative overhead)</small>
+                    </th>                    
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Current Procurement of Compost</td>
-                    <td class="column-2">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" />
-                    </td>             
-                    <td class="column-3">
-                        <select>
-                            <option value="cubic_yards">cubic yards</option>
-                            <option value="DGE">DGE</option>
-                            <option value="kWh">kWh</option>
-                            <option value="therms">therms</option>
-                            <option value="tons">tons</option>
-                        </select>
-                    </td>
-                    <td class="column-4">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
-                    </td>
+                    <%- renderSelectAndInput() %>
                 </tr>
                 <tr>
                     <td>Current Procurement of Mulch</td>
-                    <td class="column-2">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" />
-                    </td>           
-                    <td class="column-3">
-                        <select>
-                            <option value="cubic_yards">cubic yards</option>
-                            <option value="DGE">DGE</option>
-                            <option value="kWh">kWh</option>
-                            <option value="therms">therms</option>
-                            <option value="tons">tons</option>
-                        </select>
-                    </td>
-                    <td class="column-4">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
-                    </td>
+                    <%- renderSelectAndInput() %>
                 </tr>
                 <tr>
                     <td>Current Procurement of RNG</td>
-                    <td class="column-2">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" />
-                    </td>               
-                    <td class="column-3">
-                        <select>
-                            <option value="cubic_yards">cubic yards</option>
-                            <option value="DGE">DGE</option>
-                            <option value="kWh">kWh</option>
-                            <option value="therms">therms</option>
-                            <option value="tons">tons</option>
-                        </select>
-                    </td>
-                    <td class="column-4">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
-                    </td>
+                    <%- renderSelectAndInput() %>
                 </tr>
                 <tr>
                     <td>Current Procurement of other (in ROWP tons)</td>
-                    <td class="column-2">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" />
-                    </td>
-                    <td class="column-3">
-                        <select>
-                            <option value="cubic_yards">cubic yards</option>
-                            <option value="DGE">DGE</option>
-                            <option value="kWh">kWh</option>
-                            <option value="therms">therms</option>
-                            <option value="tons">tons</option>
-                        </select>
-                    </td>
-                    <td class="column-4">
-                        <input type="number" step="0.01" min="0" placeholder="0.00" id="currencyInput" />
-                    </td>
+                    <%- renderSelectAndInput() %>
                 </tr>
-                <tr>
-                    <td>Current Compliance</td>
-                    <td class="column-2"></td>
-                    <td class="column-3"></td>
-                    <td class="column-4"><%= results2025.compostTons.toLocaleString() %> tons</td>
-                </tr>
+                
+                <!-- New Row with Checkbox -->
                 <tr>
                     <td colspan="4">
-                        <small class="text-muted ms-3 fst-italic">Note: Based on standard factors from SB 1383. Cities can use a mix of products to comply</small>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="biomassElectricityCheckbox">
+                            <label class="form-check-label" for="biomassElectricityCheckbox">
+                                Fill remaining requirements using electricity from biomass electricity (also called Procurement Compliance Attributes, or PCAs)
+                            </label>
+                        </div>
                     </td>
                 </tr>
+                
+                <tr class="calculation-row bg-dark text-white">
+                    <td>Equivalent ROWP tons</td>
+                    <td class="column-2"></td>
+                    <td class="column-3"></td>
+                    <td class="column-4">
+                        <div id="equivalent-rowp-tons" class="calculation-result"></div>
+                    </td>
+                </tr>
+                <tr class="calculation-row bg-dark text-white">
+                    <td>Current Compliance</td>
+                    <td class="column-2">
+                        <div id="sum-column-2" class="calculation-result"></div>
+                    </td>
+                    <td class="column-3"></td>
+                    <td class="column-4">
+                        <div id="sum-column-4" class="calculation-result"></div>
+                    </td>
+                </tr>
+                
+                              
             </tbody>
         </table>
+
+        <!-- Note and Calculate Button Row -->
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <small class="text-muted ms-3 fst-italic">Note: Based on standard factors from SB 1383. Cities can use a mix of products to comply</small>
+            </div>
+            <div class="col-md-6 text-end">
+                <button id="calculateBtn" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
     </div>
-    
+
     <!-- Visualization -->
-     <!-- Charts Row -->
+    <!-- Charts Row -->
     <div class="row">
         <!-- Chart for 2024 -->
-        <div class="col-lg-6 col-12 chart-container mt-5">
-            <h4 class="text-center">2024 Procurement Requirements</h4>
-            <canvas id="chart2024"></canvas>
-        </div>
-        <!-- Chart for 2025 -->
-        <div class="col-lg-6 col-12 chart-container mt-5">
-            <h4 class="text-center">2025 Procurement Requirements</h4>
-            <canvas id="chart2025"></canvas>
-        </div>
+        
     </div>
 </div>
 
+<!-- JS for handling currency inputs -->
 <script>
-    document.getElementById('savePdfBtn').addEventListener('click', function() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
+    document.querySelectorAll('.currencyInput').forEach(input => {
+        input.addEventListener('blur', function() {
+            let value = parseFloat(this.value).toFixed(2);
+            if (!isNaN(value)) {
+                this.value = '$' + value;
+            }
+        });
 
-        // Define the width and height of the logo
-        const logoWidth = 20;  // Width of the logo in 
-        const logoHeight = 10;  // Adjust the height proportionally
-
-        // Calculate the X position to center the logo
-        const pageWidth = doc.internal.pageSize.getWidth();  // Get the width of the page
-        const logoX = (pageWidth - logoWidth) / 2;  // Center the logo horizontally
-
-        // Add Valinor Energy logo and title
-        const logo = new Image();
-        logo.src = '/img/logo.png';
-        logo.onload = function() {
-            doc.addImage(logo, 'PNG', logoX, 10, logoWidth, logoHeight);  // Add centered logo
-            doc.setFontSize(16);
-            doc.text('Valinor Energy', pageWidth / 2, 30, null, null, 'center');  // Center the text
-
-            // Add title and introductory text
-            doc.setFontSize(14);
-            doc.text(`Procurement Requirements for <%= city %>`, 10, 50);
-            doc.setFontSize(12);
-            doc.text(`Population: <%= population.toLocaleString() %>`, 10, 60);
-
-            // Add Procurement Requirements title and table
-            doc.setFontSize(14);
-            doc.text('Procurement Requirements', 10, 70);
-            doc.autoTable({
-                startY: 75,
-                head: [['Requirement', '2024', '2025']],
-                body: [
-                    ['SB 1383 ROWP Procurement Requirement', '<%= requirement2024.toLocaleString() %> tons', '<%= requirement2025.toLocaleString() %> tons'],
-                ],
-                theme: 'striped',
-                styles: { cellPadding: 3, halign: 'center' },
-                columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' } }
-            });
-
-            // Add Total Purchases title and table
-            doc.text('Total purchases by option to meet SB 1383 procurement requirements', 10, doc.lastAutoTable.finalY + 10);
-            doc.autoTable({
-                startY: doc.lastAutoTable.finalY + 15, // Spacing after the first table
-                head: [['Option', '2024', '2025']],
-                body: [
-                    ['Electricity Needed for one PCA', '<%= results2024.electricityPCA.toLocaleString() %> kWh', '<%= results2025.electricityPCA.toLocaleString() %> kWh'],
-                    ['Renewable Gas in the form of Transportation Fuel', '<%= results2024.renewableGasFuel.toLocaleString() %> DGE', '<%= results2025.renewableGasFuel.toLocaleString() %> DGE'],
-                    ['Electricity from Renewable Gas', '<%= results2024.electricityRenewableGas.toLocaleString() %> kWh', '<%= results2025.electricityRenewableGas.toLocaleString() %> kWh'],
-                    ['Heat from Renewable Gas', '<%= results2024.heatRenewableGas.toLocaleString() %> therms', '<%= results2025.heatRenewableGas.toLocaleString() %> therms'],
-                    ['Compost (Tons)', '<%= results2024.compostTons.toLocaleString() %> tons', '<%= results2025.compostTons.toLocaleString() %> tons'],
-                    ['Compost (Cubic Yards)', '<%= results2024.compostCubicYards.toLocaleString() %> cubic yards', '<%= results2025.compostCubicYards.toLocaleString() %> cubic yards'],
-                    ['Mulch', '<%= results2024.mulch.toLocaleString() %> tons', '<%= results2025.mulch.toLocaleString() %> tons'],
-                ],
-                theme: 'striped',
-                styles: { cellPadding: 3, halign: 'center' },
-                columnStyles: { 0: { halign: 'left' }, 1: { halign: 'right' }, 2: { halign: 'right' } }
-            });
-
-            // Save the document
-            doc.save('procurement_requirements.pdf');
-        };
-        logo.src = '/img/logo.png';  // Trigger the loading of the image
-    });
-
-    document.getElementById('currencyInput').addEventListener('blur', function() {
-        let value = parseFloat(this.value).toFixed(2);
-        if (!isNaN(value)) {
-            this.value = '$' + value;
-        }
-    });
-
-    document.getElementById('currencyInput').addEventListener('focus', function() {
-        this.value = this.value.replace('$', '');
+        input.addEventListener('focus', function() {
+            this.value = this.value.replace('$', '');
+        });
     });
 </script>
 
-<!-- Chart Generation Script -->
+<!-- Calculations -->
 <script>
-    const ctx2024 = document.getElementById('chart2024').getContext('2d');
-    const chart2024 = new Chart(ctx2024, {
-        type: 'pie',
-        data: {
-            labels: ['Electricity PCA', 'Renewable Gas Fuel', 'Electricity Renewable Gas', 'Heat Renewable Gas', 'Compost (Tons)', 'Compost (Cubic Yards)', 'Mulch'],
-            datasets: [{
-                label: '2024 Procurement Requirements',
-                data: [
-                    <%= results2024.electricityPCA %>,
-                    <%= results2024.renewableGasFuel %>,
-                    <%= results2024.electricityRenewableGas %>,
-                    <%= results2024.heatRenewableGas %>,
-                    <%= results2024.compostTons %>,
-                    <%= results2024.compostCubicYards %>,
-                    <%= results2024.mulch %>
-                ],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 205, 86, 1)',
-                    'rgba(201, 203, 207, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'right'
-                }
-            }
+    document.addEventListener('DOMContentLoaded', function() {
+        function calculateSums() {
+            let sumColumn2 = 0;
+            let sumColumn4 = 0;
+    
+            document.querySelectorAll('.column-2 input[type="number"]').forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                sumColumn2 += value;
+            });
+    
+            document.querySelectorAll('.column-4 input[type="number"]').forEach(input => {
+                const value = parseFloat(input.value) || 0;
+                sumColumn4 += value;
+            });
+    
+            document.getElementById('sum-column-2').innerText = sumColumn2.toFixed(2);
+            document.getElementById('sum-column-4').innerText = `$${sumColumn4.toFixed(2)}`;
         }
+    
+        document.getElementById('calculateBtn').addEventListener('click', calculateSums);
     });
-
-    const ctx2025 = document.getElementById('chart2025').getContext('2d');
-    const chart2025 = new Chart(ctx2025, {
-        type: 'pie',
-        data: {
-            labels: ['Electricity PCA', 'Renewable Gas Fuel', 'Electricity Renewable Gas', 'Heat Renewable Gas', 'Compost (Tons)', 'Compost (Cubic Yards)', 'Mulch'],
-            datasets: [{
-                label: '2025 Procurement Requirements',
-                data: [
-                    <%= results2025.electricityPCA %>,
-                    <%= results2025.renewableGasFuel %>,
-                    <%= results2025.electricityRenewableGas %>,
-                    <%= results2025.heatRenewableGas %>,
-                    <%= results2025.compostTons %>,
-                    <%= results2025.compostCubicYards %>,
-                    <%= results2025.mulch %>
-                ],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 205, 86, 0.2)',
-                    'rgba(201, 203, 207, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 205, 86, 1)',
-                    'rgba(201, 203, 207, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'right'
-                }
-            }
-        }
-    });
+    
 </script>

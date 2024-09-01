@@ -1,0 +1,122 @@
+<%- include('partials/header'); %>
+
+    <!-- 1. Header with logo -->
+    <div class="header-container">
+        <img src="/img/logo.png" alt="Logo" style="height: 50px;">
+    </div>
+
+    <!-- 3. Card Container -->
+    <div class="container">
+        <div class="card-container card mx-auto">
+            <!-- 5. Tabs for Steps -->
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#jurisdiction" data-bs-toggle="tab">Jurisdiction Information</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#compliance" data-bs-toggle="tab">Current Compliance Methods</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#nextsteps" data-bs-toggle="tab">Next Steps</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- 5a. Jurisdiction Information Form -->
+                <div class="tab-pane fade show active" id="jurisdiction">
+                    <div class="form-container">
+                        <!-- Jurisdiction Information form fields go here -->
+                        <button class="btn btn-primary float-end">Next -></button>
+                    </div>
+                </div>
+
+                <!-- 5b. Current Compliance Methods Form -->
+                <div class="tab-pane fade" id="compliance">
+                    <div class="form-container">
+                        <!-- Current Compliance Methods form fields and table go here -->
+                        <tr class="calculation-row">
+                            <td>Equivalent ROWP tons</td>
+                            <td class="column-2"></td>
+                            <td class="column-3"></td>
+                            <td class="column-4">
+                                <div id="equivalent-rowp-tons" class="calculation-result"></div>
+                            </td>
+                        </tr>
+                        <tr class="calculation-row">
+                            <td>Current Compliance</td>
+                            <td class="column-2">
+                                <div id="sum-column-2" class="calculation-result"></div>
+                            </td>
+                            <td class="column-3"></td>
+                            <td class="column-4">
+                                <div id="sum-column-4" class="calculation-result"></div>
+                            </td>
+                        </tr>
+                        <button class="btn btn-secondary float-start"><- Back</button>
+                        <button id="calculateBtn" class="btn btn-primary float-end">Next -></button>
+                    </div>
+                </div>
+
+                <!-- 5c. Next Steps -->
+                <div class="tab-pane fade" id="nextsteps">
+                    <div class="form-container">
+                        <!-- Placeholder text for Next Steps -->
+                        <p>Placeholder text for Next Steps.</p>
+                        <button class="btn btn-secondary float-start"><- Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script>
+        // 7. Calculations as user changes input values
+        document.addEventListener('DOMContentLoaded', function() {
+            function calculateSums() {
+                let sumColumn2 = 0;
+                let sumColumn4 = 0;
+
+                document.querySelectorAll('.column-2 input[type="number"]').forEach(input => {
+                    const value = parseFloat(input.value) || 0;
+                    sumColumn2 += value;
+                });
+
+                document.querySelectorAll('.column-4 input[type="number"]').forEach(input => {
+                    const value = parseFloat(input.value) || 0;
+                    sumColumn4 += value;
+                });
+
+                let equivalentRowpTons = sumColumn4 * 0.5; // Example calculation
+
+                document.getElementById('sum-column-2').innerText = sumColumn2.toFixed(2);
+                document.getElementById('sum-column-4').innerText = `$${sumColumn4.toFixed(2)}`;
+                document.getElementById('equivalent-rowp-tons').innerText = equivalentRowpTons.toFixed(2) + ' tons';
+            }
+
+            document.querySelectorAll('.column-2 input[type="number"], .column-4 input[type="number"]').forEach(input => {
+                input.addEventListener('input', calculateSums);
+            });
+
+            document.getElementById('calculateBtn').addEventListener('click', function() {
+                calculateSums();
+                // Redirect to the next steps tab
+                $('.nav-tabs a[href="#nextsteps"]').tab('show');
+            });
+
+            document.querySelectorAll('.btn-secondary').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Go back to the previous tab
+                    let previousTab = $(this).closest('.tab-pane').prev('.tab-pane').attr('id');
+                    if (previousTab) {
+                        $('.nav-tabs a[href="#' + previousTab + '"]').tab('show');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

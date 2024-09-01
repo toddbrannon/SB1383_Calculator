@@ -1,229 +1,59 @@
-/* Existing styles */
+/* 1. Upper 1/4 of the screen for the logo */
+.header-container {
+    background-color: #ffffff;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* 2. Main background navy blue */
 body {
-    background-color: #f8f9fa;
+    background-color: #092142;
+    font-family: Arial, sans-serif;
 }
 
-h1 {
-    margin-bottom: 20px;
-}
-
-.container {
-    max-width: 600px;
-}
-
-.chart-container canvas {
-    padding: 0!important;
-    margin: 0!important;
-    display: block!important;
-}
-
-/* Style for table headers */
-.table th {
-    background-color: #00274d!important;  /* Dark blue fill */
-    color: white!important;  /* White font color */
-}
-
-/* Style for cards around tables */
-.card {
-    background-color:#2D5297!important;  /* Light gray fill */
-    border-radius: 8px;  /* Slightly rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Stylish drop shadow */
+/* 3. Card design overlapping the header */
+.card-container {
+    background-color: #ECEFF0;
+    border-radius: 10px;
+    position: relative;
+    top: -50px;
     padding: 20px;
-    margin-bottom: 20px;
+    z-index: 2;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Modern typography */
-body, h1, h3, p {
-    font-family: 'Poppins', sans-serif;
-    line-height: 1.6;
-    color: #333;
+/* 5. Tabs with step indicators */
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #092142;
+    color: #092142;
 }
 
-/* Accent colors */
-a.btn-primary {
-    background-color: #17a2b8; /* Teal */
-    border-color: #17a2b8;
+.nav-tabs .nav-link {
+    color: #6c757d;
 }
 
-a.btn-primary:hover {
-    background-color: #138496;
-    border-color: #117a8b;
+/* Additional Styles */
+.form-container {
+    padding: 20px;
 }
 
-/* Button styles */
-.btn {
-    border-radius: 3px!important; /* Fully rounded edges */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+.bg-navy {
+    background-color: #092142;
 }
 
-.btn:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+/* Calculation Rows Styles */
+.calculation-row {
+    background-color: #343a40; /* Darker background color */
+    color: #ffffff; /* White text */
+    border-radius: 0.25rem;
 }
 
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
-
-/* Card enhancements */
-.card {
-    background: linear-gradient(145deg, #f0f1f3, #d6d8db);
-    box-shadow: 6px 6px 12px #babecc, -6px -6px 12px #ffffff;
-}
-
-.card:hover {
-    box-shadow: 12px 12px 24px #babecc, -12px -12px 24px #ffffff;
-}
-
-/* Table enhancements */
-.table th, .table td {
-    padding: 15px;
-    border: 1px solid #dee2e6;
-}
-
-.table-hover tbody tr:hover {
-    background-color: #f1f3f5;
-}
-
-/* Input and select styles */
-input[type="number"], select {
-    border-radius: 8px;
-    border: 1px solid #ced4da;
-    padding: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input[type="number"]:focus, select:focus {
-    border-color: #17a2b8;
-    box-shadow: 0 0 5px rgba(23, 162, 184, 0.5);
-}
-
-/* Adjust the width of Volume and Current Cost columns */
-.table .column-2, .table .column-4 {
-    width: 15%;
-}
-
-.table .column-3 {
-    width: 30%;
-}
-
-/* Additional Responsive Styles */
-
-@media (max-width: 768px) {
-    /* Ensure the page container does not overflow on mobile screens */
-    .container {
-        max-width: 100%;
-        padding: 10px;
-    }
-
-    /* Make headings and text more readable on small screens */
-    h1 {
-        font-size: 24px;
-    }
-
-    h3 {
-        font-size: 18px;
-    }
-
-    p {
-        font-size: 14px;
-    }
-
-    /* Buttons should scale down on smaller screens */
-    .btn {
-        padding: 10px 15px;
-        font-size: 14px;
-        border-radius: 3px!important; /* Ensure full border radius on mobile */
-    }
-
-    /* Adjust the table's font size and padding for smaller screens */
-    .table th, .table td {
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    /* Ensure the table container scrolls horizontally if necessary */
-    .table-container {
-        overflow-x: auto;
-    }
-
-    /* Reduce the size of cards on mobile screens */
-    .card {
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-
-    /* Chart container should be more flexible */
-    .chart-container {
-        margin-top: 20px;
-    }
-    
-    /* Adjust the size of charts */
-    canvas {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    /* Adjust the width of Volume and Current Cost columns */
-    .table .column-2, .table .column-4 {
-        width: 20%;
-    }
-
-    .table .column-3 {
-        width: 40%;
-    }
-}
-
-@media (max-width: 576px) {
-    /* Further adjustments for very small screens */
-    .button-row {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        text-align: center;
-        border-radius: 3px!important; /* Fully rounded edges */
-    }
-
-    h1 {
-        font-size: 22px;
-        text-align: center;
-    }
-
-    h3 {
-        font-size: 16px;
-        text-align: center;
-    }
-
-    p {
-        font-size: 12px;
-        text-align: center;
-    }
-
-    /* Reduce padding inside cards even more */
-    .card {
-        padding: 10px;
-    }
-
-    .table th, .table td {
-        font-size: 12px;
-        padding: 8px;
-    }
-
-    /* Adjust the width of Volume and Current Cost columns */
-    .table .column-2, .table .column-4 {
-        width: 20%;
-    }
-
-    .table .column-3 {
-        width: 40%;
-    }
+.calculation-result {
+    padding: 0.375rem 0.75rem;
+    background-color: #495057; /* Slightly lighter dark background for result boxes */
+    border-radius: 0.25rem;
 }
