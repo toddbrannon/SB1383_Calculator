@@ -1,5 +1,8 @@
 <%- include('partials/header'); %>
 
+<div class="background-top"></div>
+<div class="background-bottom"></div>
+
 <div class="container">
     <h1 class="text-center my-4">SB 1383 Compliance Calculator</h1>
     
@@ -21,7 +24,7 @@
         <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="step1-tab">
             <h1>Jurisdiction Information</h1>
             <div class="d-flex justify-content-center">
-                <form id="step1Form" method="POST" style="width: 100%;"> 
+                <form id="step1Form" method="POST" action="/step1" style="width: 60%;"> 
                     <div class="mb-3">
                         <label for="city" class="form-label">City/County Name</label>
                         <input type="text" class="form-control" id="city" name="city" value="<%= city || '' %>" required>
@@ -31,7 +34,7 @@
                         <input type="number" class="form-control" id="population" name="population" value="<%= population || '' %>" required>
                     </div>
                     <div class="text-center">
-                        <button type="button" class="btn btn-secondary next-step" id="nextBtn" disabled>Next</button>
+                        <button type="submit" class="btn btn-secondary next-step" id="nextBtn" disabled>Next > </button>
                     </div>
                 </form>  
                  
@@ -42,10 +45,10 @@
 
         <!-- Step 2: View Results -->
 <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
-    <h1>Procurement Requirements for <%= city %></h1>
-    <p>Population: <%= population ? population.toLocaleString() : '' %></p>
+    <h5 class="text-center">City: <%= city %></h5>
+    <h5 class="text-center">Population: <%= population ? population.toLocaleString() : '' %></h5>
 
-    <h3>Procurement Requirements</h3>
+    <h4>Procurement Requirements</h4>
     <div id="resultsContent">
         <!-- Card for the first table -->
         <div class="card table-container">
@@ -72,7 +75,8 @@
             </table>
         </div>
 
-        <h3>Calculations Based on Constants</h3>
+        <h4 class="pt-4">Calculations Based on Constants</h4>
+
         <div class="card table-container">
             <table class="table table-bordered table-hover">
                 <thead>
@@ -130,7 +134,7 @@
 
         <!-- Button row between the tables -->
         <div class="button-row text-center">
-            <a href="/" class="btn btn-secondary">Back</a>
+            <a href="/" class="btn btn-secondary"> < Back</a>
             <button id="savePdfBtn" class="btn btn-success">Save as PDF</button>
             <a href="/find-out-more" class="btn btn-primary">Find Out More</a>
         </div>

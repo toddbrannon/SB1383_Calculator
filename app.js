@@ -50,8 +50,6 @@ app.get('/', (req, res) => {
     });
 });
 
-
-
 // POST request to handle form submission and render results
 app.post('/', (req, res) => {
     const city = req.body.city;
@@ -105,6 +103,41 @@ app.post('/', (req, res) => {
     });
 });
 
+app.post('/step1', (req, res) => {
+    const city = req.body.city;
+    const population = parseInt(req.body.population);
+
+    // Calculations for 2024 and 2025
+    const requirement2024 = 0.08 * population * 0.65;
+    const requirement2025 = 0.08 * population;
+
+    // Log the city and population values to verify
+    console.log('City:', city);
+    console.log('Population:', population);
+
+    // Validate the data
+    if (city && population) {
+        // Render the form with the data for Step 2
+        
+        res.render('form', {
+            title: 'SB 1383 Compliance Calculator - Step 2',
+            city: city,
+            population: population,
+            requirement2024: null,
+            requirement2025: null,
+            results2024: null,
+            results2025: null
+        });
+    } else {
+        // Handle the error case, possibly re-rendering the first step with an error message
+        res.render('form', { 
+            title: 'SB 1383 Compliance Calculator - Step 1',
+            error: 'Please enter all required fields.',
+            city: city,
+            population: population
+        });
+    }
+});
 
 
 // Route for form submission and calculation
