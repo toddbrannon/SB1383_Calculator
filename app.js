@@ -37,10 +37,75 @@ function generatePDF(data) {
 }
 
 
-// Route for the homepage
+// GET request to render the form with the initial state
 app.get('/', (req, res) => {
-    res.render('index', { title: 'Welcome to Valinor Energy' });
+    res.render('form', {
+        title: 'SB 1383 Compliance Calculator',
+        city: null,
+        population: null,
+        requirement2024: null,
+        requirement2025: null,
+        results2024: null,  // Pass null or {}
+        results2025: null   // Pass null or {}
+    });
 });
+
+
+
+// POST request to handle form submission and render results
+app.post('/', (req, res) => {
+    const city = req.body.city;
+    const population = parseInt(req.body.population);
+
+    // Calculations for 2024 and 2025
+    const requirement2024 = 0.08 * population * 0.65;
+    const requirement2025 = 0.08 * population;
+
+    // Constants from the table
+    const constants = {
+        electricityPCA: 650,
+        renewableGasFuel: 21,
+        electricityRenewableGas: 242,
+        heatRenewableGas: 22,
+        compostTons: 0.58,
+        compostCubicYards: 1.45,
+        mulch: 1
+    };
+
+    // Calculations for the second table based on the constants
+    const results2024 = {
+        electricityPCA: requirement2024 * constants.electricityPCA,
+        renewableGasFuel: requirement2024 * constants.renewableGasFuel,
+        electricityRenewableGas: requirement2024 * constants.electricityRenewableGas,
+        heatRenewableGas: requirement2024 * constants.heatRenewableGas,
+        compostTons: requirement2024 * constants.compostTons,
+        compostCubicYards: requirement2024 * constants.compostCubicYards,
+        mulch: requirement2024 * constants.mulch
+    };
+
+    const results2025 = {
+        electricityPCA: requirement2025 * constants.electricityPCA,
+        renewableGasFuel: requirement2025 * constants.renewableGasFuel,
+        electricityRenewableGas: requirement2025 * constants.electricityRenewableGas,
+        heatRenewableGas: requirement2025 * constants.heatRenewableGas,
+        compostTons: requirement2025 * constants.compostTons,
+        compostCubicYards: requirement2025 * constants.compostCubicYards,
+        mulch: requirement2025 * constants.mulch
+    };
+
+    // Render the same form view with results populated in Step 2
+    res.render('form', {
+        title: 'SB 1383 Compliance Calculator',
+        city: city,
+        population: population,
+        requirement2024: requirement2024,
+        requirement2025: requirement2025,
+        results2024: results2024,
+        results2025: results2025
+    });
+});
+
+
 
 // Route for form submission and calculation
 app.post('/calculate', (req, res) => {

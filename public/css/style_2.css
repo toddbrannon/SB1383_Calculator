@@ -1,0 +1,59 @@
+/* 1. Upper 1/4 of the screen for the logo */
+.header-container {
+    background-color: #ffffff;
+    height: 25vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* 2. Main background navy blue */
+body {
+    background-color: #092142;
+    font-family: Arial, sans-serif;
+}
+
+/* 3. Card design overlapping the header */
+.card-container {
+    background-color: #ECEFF0;
+    border-radius: 10px;
+    position: relative;
+    top: -50px;
+    padding: 20px;
+    z-index: 2;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 5. Tabs with step indicators */
+.nav-tabs .nav-link.active {
+    border-bottom: 3px solid #092142;
+    color: #092142;
+}
+
+.nav-tabs .nav-link {
+    color: #6c757d;
+}
+
+/* Additional Styles */
+.form-container {
+    padding: 20px;
+}
+
+.bg-navy {
+    background-color: #092142;
+}
+
+/* Calculation Rows Styles */
+.calculation-row {
+    background-color: #343a40; /* Darker background color */
+    color: #ffffff; /* White text */
+    border-radius: 0.25rem;
+}
+
+.calculation-result {
+    padding: 0.375rem 0.75rem;
+    background-color: #495057; /* Slightly lighter dark background for result boxes */
+    border-radius: 0.25rem;
+}
