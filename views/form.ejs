@@ -19,6 +19,7 @@
     <div class="tab-content active input-container" id="formContent">
         <!-- Step 1: Enter Data -->
         <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="step1-tab">
+            <h1>Jurisdiction Information</h1>
             <div class="d-flex justify-content-center">
                 <form id="step1Form" method="POST" style="width: 100%;"> 
                     <div class="mb-3">
@@ -30,7 +31,7 @@
                         <input type="number" class="form-control" id="population" name="population" value="<%= population || '' %>" required>
                     </div>
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary next-step">Next</button>
+                        <button type="button" class="btn btn-secondary next-step" id="nextBtn" disabled>Next</button>
                     </div>
                 </form>  
                  

@@ -116,17 +116,30 @@ input[type="text"], input[type="number"], input[type="date"], input[type="email"
     margin-right: 10px;
 }
 
+.nav-tabs {
+    display: flex;
+    justify-content: center; /* Centers the tabs */
+    margin-bottom: 20px;
+}
+
+.nav-tabs .nav-item {
+    margin: 0 5px; /* Add some spacing between the tabs */
+}
 
 .nav-tabs .nav-link {
+    pointer-events: none; /* Disable clicking */
     color: gray;
     position: relative;
     padding-bottom: 0.5rem;
+    text-align: center;
 }
 
 .nav-tabs .nav-link.active {
-    color: #004085;
+    pointer-events: auto; /* Allow pointer events for visual feedback */
+    color: #004085; /* Active color */
     font-weight: bold;
 }
+
 .nav-tabs .nav-link.active::after {
     content: '';
     display: block;
@@ -143,11 +156,16 @@ input[type="text"], input[type="number"], input[type="date"], input[type="email"
 } */
 
 /* Default styles for mobile */
-.input-container {
+
+  .input-container {
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically if necessary */
+    flex-direction: column; /* Ensures content stacks vertically */
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
-  }
+}
   
   .step1Form {
     width: 100%;
@@ -191,8 +209,18 @@ ul.tabs li:not(:last-child) a {
 /* For larger screens */
 @media screen and (min-width: 768px) {
     .input-container {
-        width: 50%;
-        max-width: 400px;
+        width: 80%;
+        max-width: 700px;
+    }
+
+    .input-container {
+        display: flex;
+        justify-content: center; /* Centers content horizontally */
+        align-items: center; /* Centers content vertically if necessary */
+        flex-direction: column; /* Ensures content stacks vertically */
+        width: 60%;
+        max-width: 700px;
+        margin: 0 auto;
     }
 
     ul.tabs {
@@ -206,6 +234,10 @@ ul.tabs li:not(:last-child) a {
     ul.tabs li:not(:last-child) a {
         border-right: none;
         border-bottom: 1px solid #ddd;
+    }
+
+    .tab-pane h1 {
+        text-align: center;
     }
 }
 
