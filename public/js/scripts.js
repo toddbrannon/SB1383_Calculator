@@ -213,23 +213,27 @@ $(document).ready(function () {
                 totalRowpTons += volume * conversionRate;
             });
             $('#total-volume').val(totalRowpTons.toFixed(2));
+            return totalRowpTons;
+        }
+
+        // Function to calculate the current compliance percentage
+        function calculateCurrentCompliance(totalRowpTons) {
+            const population = parseFloat($('#population').val()) || 0;
+            const targetRowpTons = Math.round(population * 0.8 * 0.65);
+            const compliancePercentage = (totalRowpTons / targetRowpTons) * 100;
+            $('#current-compliance').val(compliancePercentage.toFixed(2));
         }
     
         // Attach event listeners to volume inputs and unit selects
         $('.volume-input, .unit-select').on('input change', function() {
             calculateEquivalentRowpTons();
+            const totalRowpTons = calculateEquivalentRowpTons();
+            calculateCurrentCompliance(totalRowpTons);
         });
     
-        // Initial calculation
-        calculateEquivalentRowpTons();
+        const initialTotalRowpTons = calculateEquivalentRowpTons();
+        calculateCurrentCompliance(initialTotalRowpTons);
     });
 
 });
-
-
-// $(document).ready(function() {
-//     // Match the height of the select element to the height of the input elements
-//     var inputHeight = $('.form-control').first().outerHeight();
-//     $('.custom-select-height').css('height', inputHeight + 'px');
-// });
 

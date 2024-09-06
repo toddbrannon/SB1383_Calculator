@@ -76,7 +76,7 @@
         </div>
 
         <div class="current-compliance-card">
-            <h4 class="pt-4">Current Compliance Methods</h4>
+            <h4 class="pt-4 text-center">Current Compliance Methods</h4>
 
                 <div class="d-flex justify-content-center">
                     <form id="step2Form" method="POST" action="/step2" style="width: 100%;"> 
@@ -84,7 +84,7 @@
                         <% items.forEach(item => { %>
                             <div class="row mb-3">
                                 <h5>Current Procurement of <%= item %></h5>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <label for="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Volume</label>
                                     <input type="text" class="form-control volume-input" id="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
                                 </div>
@@ -94,7 +94,7 @@
                                         <!-- Options populated by JavaScript (see scripts.js file) -->
                                     </select>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Cost</label>
                                     <input type="number" class="form-control" id="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
                                 </div>
@@ -106,29 +106,43 @@
                                 Fill remaining requirements using electricity from biomass electricity (also called Procurement Compliance Attributes, or PCAs)
                             </label>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                            <label for="" class="equivalent-rowp-tons" for="total-volume">
-                                Equivalent ROWP tons
-                            </label>
-                                <input type="text" class="form-control equivalent-rowp-tons" id="total-volume" name="total-volume" value="0" readonly>
+                        <div class="custom-container-dark">
+                            <div class="row mb-1">
+                                <div class="col-md-5">
+                                    <label for="" class="equivalent-rowp-tons" for="total-volume">
+                                        Equivalent ROWP tons
+                                    </label>
+                                    <input type="text" class="form-control equivalent-rowp-tons" id="total-volume" name="total-volume" value="0" readonly>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-3">
+                                    <label for="" class="total-cost" for="total-cost">
+                                        Total Cost
+                                    </label>
+                                    <input type="text" class="form-control total-cost" id="total-cost" name="total-cost" value="0" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-container-dark">
+                            <div class="row mb-1 align-items-center">
+                                <div class="col-md-5">
+                                    <label for="current-compliance" class="form-label">Current Compliance</label>
+                                    <input type="text" class="form-control current-compliance" id="current-compliance" name="current-compliance" value="0" readonly>
+                                </div>
+                            </div>
+                            <div class="row mt-1 mb-3 percent-compliance">
+                                
+                                    <span>% of your 2024 compliance requirement</span>
+                                
                             </div>
                         </div>
                         <div class="text-center">
+                            <a href="/" class="btn btn-primary back-step" id="backBtn" enabled> < Back</a>
                             <button type="submit" class="btn btn-secondary next-step" id="nextBtn" disabled>Next ></button>
                         </div>
                     </form>  
                 </div>
             </div>
-
-        
-
-        <!-- Button row between the tables -->
-        <div class="button-row text-center">
-            <a href="/" class="btn btn-secondary"> < Back</a>
-            <button id="savePdfBtn" class="btn btn-success">Save as PDF</button>
-            <a href="/find-out-more" class="btn btn-primary">Find Out More</a>
-        </div>
     </div>
 </div>
 
@@ -138,6 +152,11 @@
             <h3>Next Steps</h3>
             <p>Additional information or actions that users can take after completing the calculator.</p>
         </div>
+        <!-- Button row between the tables -->
+        <!-- <div class="button-row text-center">
+            <button id="savePdfBtn" class="btn btn-success">Save as PDF</button>
+            <a href="/find-out-more" class="btn btn-primary">Find Out More</a>
+        </div> -->
     </div>
 </div>
 

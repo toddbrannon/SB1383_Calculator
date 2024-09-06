@@ -304,3 +304,23 @@ ul.tabs li:not(:last-child) a {
     margin-bottom: 20px;
     border: 1px solid #888;
 }
+
+.custom-container {
+    background-color: #f8f9fa; /* Light gray background */
+    border: 1px solid #ced4da; /* Gray border */
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.custom-container-dark {
+    background-color: #e9ecef; /* Darker gray background */
+    border: 1px solid #adb5bd; /* Darker gray border */
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 3px;
+}
+
+.percent-compliance {
+    font-size: 85%;
+}
+
