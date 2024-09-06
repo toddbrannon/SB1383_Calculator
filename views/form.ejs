@@ -68,69 +68,50 @@
                             <br>
                             <small class="text-muted ms-3 fst-italic">Note: SB1383 requires .08 tons per person</small>
                         </td>
-                        <td><%= requirement2024 ? requirement2024.toLocaleString() : 'N/A' %> tons</td>
-                        <td><%= requirement2025 ? requirement2025.toLocaleString() : 'N/A' %> tons</td>
-                    </tr>                    
+                        <td><%= population ? Math.round(population * 0.8 * 0.65).toLocaleString() : 'N/A' %> tons</td>
+                        <td><%= population ? Math.round(population * 0.8).toLocaleString() : 'N/A' %> tons</td>
+                        </tr>                    
                 </tbody>
             </table>
         </div>
 
-        <h4 class="pt-4">Calculations Based on Constants</h4>
+        <div class="current-compliance-card">
+            <h4 class="pt-4">Current Compliance Methods</h4>
 
-        <div class="card table-container">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th class="column-1">Resource</th>
-                        <th class="column-2">2024 (Tons/Units)</th>
-                        <th class="column-3">2025 (Tons/Units)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% const safeResults2024 = (typeof results2024 !== 'undefined' && results2024) ? results2024 : {}; %>
-                    <% const safeResults2025 = (typeof results2025 !== 'undefined' && results2025) ? results2025 : {}; %>
+                <div class="d-flex justify-content-center">
+                    <form id="step2Form" method="POST" action="/step2" style="width: 100%;"> 
+                        <% const items = ["Compost", "Mulch", "RNG", "other (in ROWP tons)"]; %>
+                        <% items.forEach(item => { %>
+                            <div class="row mb-3">
+                                <h5>Current Procurement of <%= item %></h5>
+                                <div class="col-md-4">
+                                    <label for="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Volume</label>
+                                    <input type="text" class="form-control" id="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Unit</label>
+                                    <select class="form-select custom-select-height" id="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" name="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" required>
+                                        <option value="tons">tons</option>
+                                        <option value="cubic yards">cubic yards</option>
+                                        <option value="DGE">DGE</option>
+                                        <option value="kWh">kWh</option>
+                                        <option value="therms">therms</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Cost</label>
+                                    <input type="number" class="form-control" id="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
+                                </div>
+                            </div>
+                        <% }); %>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-secondary next-step" id="nextBtn" disabled>Next ></button>
+                        </div>
+                    </form>  
+                </div>
+            </div>
 
-                    <tr>
-                        <td>Electricity PCA</td>
-                        <td><%= safeResults2024.electricityPCA ? safeResults2024.electricityPCA.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.electricityPCA ? safeResults2025.electricityPCA.toLocaleString() : 'N/A' %></td>
-                    </tr>
-                    <tr>
-                        <td>Renewable Gas Fuel</td>
-                        <td><%= safeResults2024.renewableGasFuel ? safeResults2024.renewableGasFuel.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.renewableGasFuel ? safeResults2025.renewableGasFuel.toLocaleString() : 'N/A' %></td>
-                    </tr>
-                    <tr>
-                        <td>Electricity from Renewable Gas</td>
-                        <td><%= safeResults2024.electricityRenewableGas ? safeResults2024.electricityRenewableGas.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.electricityRenewableGas ? safeResults2025.electricityRenewableGas.toLocaleString() : 'N/A' %></td>
-                    </tr>
-                    <tr>
-                        <td>Heat from Renewable Gas</td>
-                        <td><%= safeResults2024.heatRenewableGas ? safeResults2024.heatRenewableGas.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.heatRenewableGas ? safeResults2025.heatRenewableGas.toLocaleString() : 'N/A' %></td>
-                    </tr>
-                    <tr>
-                        <td>Compost (Tons)</td>
-                        <td><%= safeResults2024.compostTons ? safeResults2024.compostTons.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.compostTons ? safeResults2025.compostTons.toLocaleString() : 'N/A' %></td>
-                    </tr>
-                    <tr>
-                        <td>Compost (Cubic Yards)</td>
-                        <td><%= safeResults2024.compostCubicYards ? safeResults2024.compostCubicYards.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.compostCubicYards ? safeResults2025.compostCubicYards.toLocaleString() : 'N/A' %></td>
-                    </tr>
-                    <tr>
-                        <td>Mulch</td>
-                        <td><%= safeResults2024.mulch ? safeResults2024.mulch.toLocaleString() : 'N/A' %></td>
-                        <td><%= safeResults2025.mulch ? safeResults2025.mulch.toLocaleString() : 'N/A' %></td>
-                    </tr>
-
-
-                    
-                </tbody>
-            </table>
-        </div>
+        
 
         <!-- Button row between the tables -->
         <div class="button-row text-center">

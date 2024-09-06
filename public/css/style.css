@@ -290,3 +290,17 @@ ul.tabs li:not(:last-child) a {
         font-size: 12px;
     }
 }
+
+.custom-select-height {
+    padding-top: .375rem; /* Adjust padding to align text vertically */
+    padding-bottom: .375rem; /* Adjust padding to align text vertically */
+}
+
+.current-compliance-card {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #888;
+}

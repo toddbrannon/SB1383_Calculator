@@ -16,15 +16,15 @@ $(document).ready(function () {
     }
 
     // Explicit navigation control for Next button
-    $('#nextBtn').click(function() {
-        var $activeTab = $('.nav-tabs .nav-link.active');
-        var $nextTab = $activeTab.parent().next().find('.nav-link');
+    // $('#nextBtn').click(function() {
+    //     var $activeTab = $('.nav-tabs .nav-link.active');
+    //     var $nextTab = $activeTab.parent().next().find('.nav-link');
 
-        // Check if the next tab is actually the second tab
-        if ($nextTab.length && $nextTab.attr('id') === 'step2-tab') {
-            $nextTab.tab('show');
-        }
-    });
+    //     // Check if the next tab is actually the second tab
+    //     if ($nextTab.length && $nextTab.attr('id') === 'step2-tab') {
+    //         $nextTab.tab('show');
+    //     }
+    // });
 
     // Navigation for the Back button
     $('.prev-step').click(function() {
@@ -165,3 +165,11 @@ $(document).ready(function () {
     }
 
 });
+
+
+// $(document).ready(function() {
+//     // Match the height of the select element to the height of the input elements
+//     var inputHeight = $('.form-control').first().outerHeight();
+//     $('.custom-select-height').css('height', inputHeight + 'px');
+// });
+
