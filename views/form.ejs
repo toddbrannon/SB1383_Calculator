@@ -86,16 +86,12 @@
                                 <h5>Current Procurement of <%= item %></h5>
                                 <div class="col-md-4">
                                     <label for="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Volume</label>
-                                    <input type="text" class="form-control" id="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
+                                    <input type="text" class="form-control volume-input" id="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Unit</label>
-                                    <select class="form-select custom-select-height" id="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" name="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" required>
-                                        <option value="tons">tons</option>
-                                        <option value="cubic yards">cubic yards</option>
-                                        <option value="DGE">DGE</option>
-                                        <option value="kWh">kWh</option>
-                                        <option value="therms">therms</option>
+                                    <select class="form-select custom-select-height unit-select" id="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" name="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" required>
+                                        <!-- Options populated by JavaScript (see scripts.js file) -->
                                     </select>
                                 </div>
                                 <div class="col-md-4">
@@ -104,6 +100,20 @@
                                 </div>
                             </div>
                         <% }); %>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="pca-checkbox" name="pca-checkbox">
+                            <label class="form-check-label" for="pca-checkbox">
+                                Fill remaining requirements using electricity from biomass electricity (also called Procurement Compliance Attributes, or PCAs)
+                            </label>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                            <label for="" class="equivalent-rowp-tons" for="total-volume">
+                                Equivalent ROWP tons
+                            </label>
+                                <input type="text" class="form-control equivalent-rowp-tons" id="total-volume" name="total-volume" value="0" readonly>
+                            </div>
+                        </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-secondary next-step" id="nextBtn" disabled>Next ></button>
                         </div>

@@ -164,6 +164,66 @@ $(document).ready(function () {
         // ... any other initialization code
     }
 
+    $(document).ready(function() {
+        // Conversion rates
+        const conversionRates = {
+            'Compost': {
+                'tons': 1 / 0.58,
+                'cubic yards': 1 / 1.45
+            },
+            'Mulch': {
+                'tons': 1
+            },
+            'RNG': {
+                'DGE': 1 / 21,
+                'kWh': 1 / 242,
+                'therms': 1 / 22
+            },
+            'other (in ROWP tons)': {
+                'tons': 1
+            }
+        };
+
+        // Units for each item
+        const units = {
+            'Compost': ['tons', 'cubic yards'],
+            'Mulch': ['tons'],
+            'RNG': ['DGE', 'kWh', 'therms'],
+            'other (in ROWP tons)': ['tons']
+        };
+
+        // Populate select options based on item
+        $('.unit-select').each(function() {
+            const item = $(this).closest('.row').find('h5').text().replace('Current Procurement of ', '');
+            const unitSelect = $(this);
+            unitSelect.empty(); // Clear existing options
+            units[item].forEach(unit => {
+                unitSelect.append(new Option(unit, unit));
+            });
+        });
+    
+        // Function to calculate the equivalent ROWP tons
+        function calculateEquivalentRowpTons() {
+            let totalRowpTons = 0;
+            $('.volume-input').each(function() {
+                const item = $(this).closest('.row').find('h5').text().replace('Current Procurement of ', '');
+                const unit = $(this).closest('.row').find('.unit-select').val();
+                const volume = parseFloat($(this).val()) || 0;
+                const conversionRate = conversionRates[item][unit] || 0;
+                totalRowpTons += volume * conversionRate;
+            });
+            $('#total-volume').val(totalRowpTons.toFixed(2));
+        }
+    
+        // Attach event listeners to volume inputs and unit selects
+        $('.volume-input, .unit-select').on('input change', function() {
+            calculateEquivalentRowpTons();
+        });
+    
+        // Initial calculation
+        calculateEquivalentRowpTons();
+    });
+
 });
 
 
