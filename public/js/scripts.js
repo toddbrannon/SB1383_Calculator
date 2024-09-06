@@ -221,7 +221,17 @@ $(document).ready(function () {
             const population = parseFloat($('#population').val()) || 0;
             const targetRowpTons = Math.round(population * 0.8 * 0.65);
             const compliancePercentage = (totalRowpTons / targetRowpTons) * 100;
-            $('#current-compliance').val(compliancePercentage.toFixed(2));
+            $('#current-compliance').val(compliancePercentage.toFixed(2) + '%');
+        }
+
+        // Function to calculate the total cost
+        function calculateTotalCost() {
+            let totalCost = 0;
+            $('.cost-input').each(function() {
+                const cost = parseFloat($(this).val()) || 0;
+                totalCost += cost;
+            });
+            $('#total-cost').val('$' + totalCost.toFixed(0));
         }
     
         // Attach event listeners to volume inputs and unit selects
@@ -230,9 +240,16 @@ $(document).ready(function () {
             const totalRowpTons = calculateEquivalentRowpTons();
             calculateCurrentCompliance(totalRowpTons);
         });
+
+        $('.cost-input').on('input change', function() {
+            calculateTotalCost();
+        });
     
         const initialTotalRowpTons = calculateEquivalentRowpTons();
         calculateCurrentCompliance(initialTotalRowpTons);
+
+        const initialTotalCost = calculateTotalCost();
+        calculateTotalCost(initialTotalCost);
     });
 
 });

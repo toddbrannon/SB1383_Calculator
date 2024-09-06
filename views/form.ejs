@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label for="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Cost</label>
-                                    <input type="number" class="form-control" id="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
+                                    <input type="number" class="form-control cost-input" id="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
                                 </div>
                             </div>
                         <% }); %>
@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="col-md-4"></div>
                                 <div class="col-md-3">
-                                    <label for="" class="total-cost" for="total-cost">
+                                    <label for="" class="form-label" for="total-cost">
                                         Total Cost
                                     </label>
                                     <input type="text" class="form-control total-cost" id="total-cost" name="total-cost" value="0" readonly>
