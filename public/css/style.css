@@ -43,6 +43,26 @@ body {
     text-align: center;
 }
 
+/* Default styles for the form row */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust as needed */
+}
+
+/* Styles for individual form elements */
+.form-row .form-group {
+    flex: 1;
+    min-width: 100px; /* Adjust as needed */
+    margin-right: 10px; /* Adjust as needed */
+}
+
+/* Remove margin for the last element in the row */
+.form-row .form-group:last-child {
+    margin-right: 0;
+}
+
 h2 {
     color: #333;
     margin-bottom: 20px;
@@ -146,6 +166,8 @@ input[type="text"], input[type="number"], input[type="date"], input[type="email"
 
 .nav-tabs {
     display: flex;
+    flex: 1;
+    text-align: center;
     justify-content: center; /* Centers the tabs */
     margin-bottom: 20px;
 }
@@ -272,7 +294,7 @@ ul.tabs li:not(:last-child) a {
 /* Make tabs responsive and fit on one row */
 @media screen and (max-width: 767px) {
     .nav-tabs {
-        display: flex;
+        display: block;
         overflow-x: auto;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
@@ -280,14 +302,30 @@ ul.tabs li:not(:last-child) a {
     }
 
     .nav-tabs .nav-item {
+        display: block;
+        width: 100%;
         flex: 1 1 auto;
         text-align: center;
+        margin-bottom: 10px;
     }
 
     .nav-tabs .nav-link {
         white-space: nowrap;
         padding: 10px 5px;
         font-size: 12px;
+    }
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-row .form-group {
+        margin-right: 0;
+        margin-bottom: 10px; /* Adjust as needed */
+    }
+
+    .form-row .form-group:last-child {
+        margin-bottom: 0;
     }
 }
 

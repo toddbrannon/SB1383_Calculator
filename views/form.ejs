@@ -84,20 +84,24 @@
                         <% items.forEach(item => { %>
                             <div class="row mb-3">
                                 <h5>Current Procurement of <%= item %></h5>
-                                <div class="col-md-5">
-                                    <label for="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Volume</label>
-                                    <input type="text" class="form-control volume-input" id="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Unit</label>
-                                    <select class="form-select custom-select-height unit-select" id="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" name="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" required>
-                                        <!-- Options populated by JavaScript (see scripts.js file) -->
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Cost</label>
-                                    <input type="number" class="form-control cost-input" id="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
-                                </div>
+                                
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Volume</label>
+                                            <input type="text" class="form-control volume-input" id="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-volume-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Unit</label>
+                                            <select class="form-select custom-select-height unit-select" id="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" name="unit-<%= item.toLowerCase().replace(/ /g, '-') %>" required>
+                                                <!-- Options populated by JavaScript (see scripts.js file) -->
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" class="form-label">Cost</label>
+                                            <input type="number" class="form-control cost-input" id="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" name="current-cost-<%= item.toLowerCase().replace(/ /g, '-') %>" value="" placeholder="0" required>
+                                        </div>
+                                    </div>  
+                                    
                             </div>
                         <% }); %>
                         <div class="form-check mb-3">
@@ -143,6 +147,7 @@
                     </form>  
                 </div>
             </div>
+        </div>
     </div>
 </div>
 
